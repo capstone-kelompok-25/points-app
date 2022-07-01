@@ -1,83 +1,113 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <v-card class="logo py-4 d-flex justify-center">
-        <NuxtLogo />
-        <VuetifyLogo />
-      </v-card>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications.</p>
-          <p>
-            For more information on Vuetify, check out the <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              documentation
-            </a>.
-          </p>
-          <p>
-            If you have questions, please join the official <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord
-            </a>.
-          </p>
-          <p>
-            Find a bug? Report it on the github <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board
-            </a>.
-          </p>
-          <p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3">
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt Documentation
-          </a>
-          <br>
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="primary"
-            nuxt
-            to="/inspire"
-          >
-            Continue
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-col>
-  </v-row>
+  <div class="bg">
+  <p class="ml-2">POINT.ID</p>
+    <v-layout justify-center align-center>
+      <v-flex shrink>
+        <v-row>
+          <v-carousel height="auto" hide-delimiters>
+            <v-carousel-item
+              v-for="(item, i) in items"
+              :key="i"
+              :src="item.src"
+            ></v-carousel-item>
+          </v-carousel>
+        </v-row>
+        <br />
+        <v-row class="text-center">
+          <v-col md="3">
+            <v-card dark class="indexCard" width="262px">
+              <br><br>
+              <v-img src="/assets/icon/LandingPage/qr-code.png" max-width="33px" class="mx-auto"></v-img>
+              <span>Get Point</span>
+              <br><br>
+            </v-card>
+          </v-col>
+          <v-col md="3">
+            <v-card dark class="indexCard" width="262px" @click="isiEmoney">
+              <br><br>
+              <v-img src="/assets/icon/LandingPage/credit-card-2-back-fill.png" max-width="33px" class="mx-auto"></v-img>
+              <span>Redeem E-Money</span>
+              <br><br>
+            </v-card>
+          </v-col>
+          <v-col md="3">
+            <v-card dark class="indexCard" width="262px" @click="isiCashout">
+              <br><br>
+              <v-img src="/assets/icon/LandingPage/E-Money.png" max-width="33px" class="mx-auto"></v-img>
+              <span>Redeem Cash-Out</span>
+              <br><br>
+            </v-card>
+          </v-col>
+          <v-col md="3">
+            <v-card dark class="indexCard" width="262px" @click="isiPaketPulsa">
+              <br><br>
+              <v-img src="/assets/icon/LandingPage/pulsa.png" max-width="33px" class="mx-auto"></v-img>
+              <span>Redeem Pulsa/Paket Data</span>
+              <br><br>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-flex>
+    </v-layout>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'IndexPage'
-}
+  name: 'IndexPage',
+  layout: 'user',
+  data() {
+    return {
+      items: [
+        {
+          src: require('../static/assets/icon/LandingPage/Banner.png'),
+        },
+        {
+          src: require('../static/assets/icon/LandingPage/Banner.png'),
+        },
+      ],
+    };
+  },
+  methods: {
+    isiPaketPulsa() {
+      this.$router.push("/isi-paket-pulsa");
+    },
+    isiCashout() {
+      this.$router.push("/isi-cashout");
+    },
+    isiEmoney() {
+      this.$router.push("/isi-emoney");
+    },
+  },
+};
 </script>
+
+<style scoped>
+.indexCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 10px;
+
+  background: #3790FC;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+p{
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 38px;
+  color: #3790FC;
+}
+
+.carousel {
+  height: 300px !important;
+}
+</style>
