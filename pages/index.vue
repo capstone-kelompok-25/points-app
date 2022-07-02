@@ -15,7 +15,7 @@
         <br />
         <v-row class="text-center">
           <v-col md="3">
-            <v-card dark class="indexCard" width="262px">
+            <v-card dark class="indexCard" width="262px" @click="getPoint">
               <br><br>
               <v-img src="/assets/icon/LandingPage/qr-code.png" max-width="33px" class="mx-auto"></v-img>
               <span>Get Point</span>
@@ -69,6 +69,9 @@ export default {
     };
   },
   methods: {
+    getPoint() {
+      this.$router.push("/get-point");
+    },
     isiPaketPulsa() {
       this.$router.push("/isi-paket-pulsa");
     },

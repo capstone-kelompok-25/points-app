@@ -78,7 +78,13 @@
               </v-icon>
             </v-btn>
           </v-card-text>
-          <img src="">
+          <v-img 
+            src="/assets/icon/GetPoint/image 2.png" 
+            max-width="186px" 
+            max-height="52px"
+            class="ml-7"
+          >
+          </v-img>
         </v-card>
       </v-col>
       <v-col cols="12" sm="6" md="6" 
@@ -89,7 +95,7 @@
         >
         <v-card-text>
           <img src="../static/assets/icon/pointid-logo.jpg" width="120">
-          <span>2022 PT. Point.ID</span>
+          <span>© 2022 PT. Point.ID</span>
         </v-card-text>
           <v-card-text>
             <v-btn
