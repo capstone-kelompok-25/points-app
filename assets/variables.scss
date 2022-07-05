@@ -2,3 +2,12 @@
 //
 // The variables you want to modify
 // $font-size-root: 20px;
+* {
+  text-transform: none !important;
+}
+
+// background for index page
+.bg {
+  background-color: #f0f4f9;
+  padding: 26px 16px 112px;
+}

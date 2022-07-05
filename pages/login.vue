@@ -1,11 +1,14 @@
 <template>
   <v-container>
     <div class="d-flex justify-center">
-      <h1> WELCOME! </h1>
+      <h1>WELCOME!</h1>
     </div>
     <br />
     <div class="d-flex justify-center">
-    <span> Sign in to enjoy the benefits of <span class="blue--text">POINT.ID</span> </span>
+      <span>
+        Sign in to enjoy the benefits of
+        <span class="blue--text">POINT.ID</span>
+      </span>
     </div>
     <v-card-title>
       <img
@@ -24,6 +27,7 @@
               solo
               dense
               label="example.email@gmail.com"
+              v-model="emailUser"
             ></v-text-field>
             <h4>Password</h4>
             <v-text-field
@@ -34,59 +38,76 @@
               :type="show3 ? 'text' : 'password'"
               name="input-10-2"
               hint="At least 8 characters"
-              value=""
+              value="********"
+              v-model="passwordUser"
               class="input-group--focused"
               @click:append="show3 = !show3"
-          ></v-text-field>
+            ></v-text-field>
           </v-card-text>
           <br />
         </v-card>
         <v-card class="mx-auto" max-width="542" elevation="0">
           <div class="d-flex justify-center">
-            <v-btn width="75%" dark color="#3790FC"> Sign In </v-btn>
+            <v-btn width="75%" dark color="#3790FC" @click="login">
+              Sign In
+            </v-btn>
           </div>
         </v-card>
       </v-col>
     </v-row>
     <br /><br />
     <div class="d-flex justify-center">
-        <p> I’m a new member <a @click="register">Sign Up</a> </p>
-      </div>
+      <p>I’m a new member <a @click="register">Sign Up</a></p>
+    </div>
   </v-container>
 </template>
 
 <script>
 export default {
   name: "LoginPage",
-  data () {
-      return {
-        show3: false,
-        password: 'Password',
-        rules: {
-          required: value => !!value || 'Required.',
-          min: v => v.length >= 8 || 'Min 8 characters',
-          emailMatch: () => (`The email and password you entered don't match`),
-        },
-      }
-    },
-  methods: {
-  register() {
-       this.$router.push('/register')
+  data() {
+    return {
+      show3: false,
+      password: "Password",
+      rules: {
+        required: (value) => !!value || "Required.",
+        min: (v) => v.length >= 8 || "Min 8 characters",
+        emailMatch: () => `The email and password you entered don't match`,
       },
+
+      emailUser: "",
+      passwordUser: "",
+    };
+  },
+  methods: {
+    register() {
+      this.$router.push("/register");
     },
+    login() {
+      this.$store
+        .dispatch("Authentication/fetchLogin", {
+          email: this.emailUser,
+          password: this.passwordUser,
+        })
+        .catch((err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+    },
+  },
 };
 </script>
 
 <style scoped>
 span {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
   line-height: 134.69%;
   /* or 32px */
 
-
-color: #000000;
+  color: #000000;
 }
 </style>
