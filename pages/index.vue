@@ -13,6 +13,7 @@
           </v-carousel>
         </v-row>
 
+
         <v-row class="text-center card-wrapper-homepage">
           <v-card dark color="#3790fc" class="indexCard" width="262px">
             <br /><br />
@@ -75,6 +76,7 @@
             <span>Redeem Pulsa/Paket Data</span>
             <br /><br />
           </v-card>
+
         </v-row>
       </v-flex>
     </v-layout>
@@ -98,6 +100,9 @@ export default {
     };
   },
   methods: {
+    getPoint() {
+      this.$router.push("/get-point");
+    },
     isiPaketPulsa() {
       this.$router.push("/isi-paket-pulsa");
     },

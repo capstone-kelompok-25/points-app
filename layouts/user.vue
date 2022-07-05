@@ -5,7 +5,6 @@
     <v-main>
       <Nuxt />
     </v-main>
-
     <v-divider></v-divider>
     <v-footer class="container footer-wrapper" color="#FFFFFF">
       <v-col class="footer-left-side">
@@ -50,6 +49,7 @@
           <img src="../static/assets/icon/pointid-logo.jpg" width="120" />
           <span>2022 PT. Point.ID</span>
         </v-row>
+
       </v-col>
     </v-footer>
   </v-app>
