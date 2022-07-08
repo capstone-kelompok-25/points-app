@@ -3,6 +3,19 @@
     <p class="ml-2"><a href="/" style="text-decoration: none"> POINT.ID</a></p>
     <v-layout justify-center align-center>
       <v-flex shrink>
+        <div v-if="isLogin" style="margin-left: -10px">
+          <h3>Total Point Kamu</h3>
+          <v-card height="60" width="75%" class="mb-10">
+            <v-card-title>
+              <v-img
+                src="/assets/icon/emoney/Vector.png"
+                max-width="30px"
+                class="ml-1"
+              ></v-img>
+              <h3 class="ml-1">{{ totalPoint }}</h3>
+            </v-card-title>
+          </v-card>
+        </div>
         <v-row>
           <v-carousel height="auto" hide-delimiters>
             <v-carousel-item
@@ -13,9 +26,14 @@
           </v-carousel>
         </v-row>
 
-
         <v-row class="text-center card-wrapper-homepage">
-          <v-card dark color="#3790fc" class="indexCard" width="262px">
+          <v-card
+            dark
+            color="#3790fc"
+            class="indexCard"
+            width="262px"
+            @click="getPoint"
+          >
             <br /><br />
             <v-img
               src="/assets/icon/LandingPage/qr-code.png"
@@ -76,7 +94,6 @@
             <span>Redeem Pulsa/Paket Data</span>
             <br /><br />
           </v-card>
-
         </v-row>
       </v-flex>
     </v-layout>
@@ -87,6 +104,7 @@
 export default {
   name: "IndexPage",
   layout: "user",
+  isLogin: false,
   data() {
     return {
       items: [
@@ -112,6 +130,19 @@ export default {
     isiEmoney() {
       this.$router.push("/isi-emoney");
     },
+  },
+  computed: {
+    totalPoint() {
+      return this.$cookies.get("userData").poin;
+    },
+  },
+  created() {
+    let token = this.$cookies.get("userData");
+    if (!token) {
+      this.isLogin = false;
+    } else {
+      this.isLogin = true;
+    }
   },
 };
 </script>

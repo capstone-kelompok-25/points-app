@@ -14,7 +14,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer> -->
-    <v-toolbar v-if="!isLogin" class="navbar-component" dense>
+    <v-toolbar v-if="!isLoged" class="navbar-component" dense>
       <span class="hidden-sm-and-up">
         <v-app-bar-nav-icon @click="sidebar = !sidebar"> </v-app-bar-nav-icon>
       </span>
@@ -47,23 +47,32 @@
         </v-btn>
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn text v-bind="attrs" v-on="on"> Akun Saya </v-btn>
+            <v-img
+              class="my-2"
+              width="27.5"
+              height="27.5"
+              v-bind="attrs"
+              v-on="on"
+              :src="require(`../static/assets/icon/profile/user-icon.png`)"
+            ></v-img>
           </template>
           <v-list>
             <v-list-item>
-              <v-btn text>Profile</v-btn>
+              <v-btn
+                text
+                @click="
+                  () => {
+                    this.$router.push(`/profile/${customerId}`);
+                  }
+                "
+                >Profile</v-btn
+              >
             </v-list-item>
             <v-list-item>
               <v-btn text color="red" @click="openLogoutModal">Keluar</v-btn>
             </v-list-item>
           </v-list>
         </v-menu>
-        <v-img
-          class="my-2"
-          width="27.5"
-          height="27.5"
-          :src="require(`../static/assets/icon/profile/user-icon.png`)"
-        ></v-img>
       </v-toolbar-items>
     </v-toolbar>
     <v-dialog v-model="isOpenLogout" max-width="500px">
@@ -97,16 +106,21 @@
 <script>
 export default {
   name: "NavbarComponent",
+  props: {
+    isLoged: {
+      type: Boolean,
+      required: true,
+    },
+  },
   data() {
     return {
       sidebar: false,
-      isLogin: false,
       isOpenLogout: false,
       menuItems: [
         { title: "Beranda", path: "/" },
         { title: "Mitra Point.ID", path: "/mitra-pointid" },
         { title: "Login", path: "/login" },
-        { title: "Register", path: "/register" },
+        { title: "Register", path: "/get-point" },
       ],
       menuLoged: [
         { title: "Beranda", path: "/" },
@@ -114,14 +128,19 @@ export default {
       ],
     };
   },
-  created() {
-    let token = this.$cookies.get("userData");
-    if (!token) {
-      this.isLogin = false;
-    } else {
-      this.isLogin = true;
-    }
+  computed: {
+    customerId() {
+      return this.$cookies.get("userData").id;
+    },
   },
+  // created() {
+  //   let token = this.$cookies.get("userData");
+  //   if (!token) {
+  //     this.isLoged = false;
+  //   } else {
+  //     this.isLoged = true;
+  //   }
+  // },
   methods: {
     openLogoutModal() {
       this.isOpenLogout = true;

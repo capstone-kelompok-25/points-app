@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <navbar-component />
+    <navbar-component :isLoged="isLogin" />
 
     <v-main>
       <Nuxt />
@@ -49,7 +49,6 @@
           <img src="../static/assets/icon/pointid-logo.jpg" width="120" />
           <span>2022 PT. Point.ID</span>
         </v-row>
-
       </v-col>
     </v-footer>
   </v-app>
@@ -66,12 +65,21 @@ export default {
   data() {
     return {
       icons: ["mdi-instagram", "mdi-twitter", "mdi-linkedin", "mdi-facebook"],
+      isLogin: false,
     };
   },
   methods: {
     redirectToApp() {
       this.$router.push("/");
     },
+  },
+  created() {
+    let token = this.$cookies.get("userData");
+    if (!token) {
+      this.isLogin = false;
+    } else {
+      this.isLogin = true;
+    }
   },
 };
 </script>

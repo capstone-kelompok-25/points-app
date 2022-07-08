@@ -1,13 +1,13 @@
 const state = () => ({
-  UserData: [],
+  userDataList: [],
 });
 
 const mutations = {
   setUserData(state, param) {
-    state.UserData = param;
+    state.userDataList = param;
   },
   clearDataUser(state) {
-    state.UserData = [];
+    state.userDataList = [];
   },
 };
 
@@ -32,14 +32,26 @@ const actions = {
       path: "/",
       maxAge: 60 * 60,
     });
-    store.commit("setUserData", response.data.result);
 
     this.$router.push("/");
   },
   fetchLogout(store) {
     this.$cookies.remove("userData");
     store.commit("clearDataUser");
-    location.reload();
+    window.location.href = "/";
+  },
+  async fetchDataCustomer(store, idCustomer) {
+    const header = {
+      Authorization: "Bearer " + this.$cookies.get("userData").token,
+      "Content-type": "application/json",
+    };
+    const response = await this.$axios.get(
+      `${this.$axios.defaults.baseURL}/customer/${idCustomer}`,
+      {
+        headers: header,
+      }
+    );
+    store.commit("setUserData", response.data.result);
   },
 };
 
