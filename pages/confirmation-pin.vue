@@ -2,7 +2,7 @@
   <div class="bg">
     <v-row class="mx-auto" align="center">
       <v-col md="6" class="mx-auto text-center">
-        <v-img src="/assets/icon/logo.png" max-width="300" class="mx-auto"></v-img>
+        <v-img src="/assets/icon/new logo.png" max-width="300" class="mx-auto"></v-img>
         <span class="mx-auto text-center">Silahkan Masukan pin<span class="blue--text"> POIN.ID</span> anda</span
         >
         <v-text-field
