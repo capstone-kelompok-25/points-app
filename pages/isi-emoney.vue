@@ -62,14 +62,7 @@
       </v-row>
       <v-row class="d-flex justify-end">
         <v-col md="3">
-          <v-btn
-            dark
-            block
-            color="blue"
-            shaped
-            x-large
-            @click="handleRedeemEmoney"
-          >
+          <v-btn dark block color="blue" shaped x-large @click="save">
             NEXT
           </v-btn>
         </v-col>
@@ -168,40 +161,60 @@ export default {
       console.log(this.nominalSelected);
     },
 
-    async handleRedeemEmoney() {
-      const header = {
-        Authorization: "Bearer " + this.$cookies.get("userData").token,
-        "Content-type": "application/json",
-      };
-      await this.$axios
-        .post(
-          `${this.$axios.defaults.baseURL}/emoney`,
-          {
-            Customer_id: this.$cookies.get("userData").id,
-            bank_provider: this.paymentSelected,
-            nomor: this.phoneNumber,
-            an_rekening: this.$cookies.get("userData").fullname,
-            amount: this.nominalSelected,
-            poin_account: this.$cookies.get("userData").poin,
-            poin_redeem: this.nominalSelected,
-          },
-          {
-            headers: header,
-          }
-        )
-        .then((res) => {
-          console.log(res);
-          this.$router.push("/detail-transaction");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    save() {
+      this.$store.dispatch("Transaction/fetchDataEmoney", {
+        Customer_id: this.$cookies.get("userData").id,
+        bank_provider: this.paymentSelected,
+        nomor: this.phoneNumber,
+        an_rekening: this.$cookies.get("userData").fullname,
+        amount: this.nominalSelected,
+        poin_account: this.$cookies.get("userData").poin,
+        poin_redeem: this.nominalSelected,
+      });
+
+      this.$router.push("/emoney/detail-transaction");
     },
+
+    // async handleRedeemEmoney() {
+    //   const header = {
+    //     Authorization: "Bearer " + this.$cookies.get("userData").token,
+    //     "Content-type": "application/json",
+    //   };
+    //   await this.$axios
+    //     .post(
+    //       `${this.$axios.defaults.baseURL}/emoney`,
+    //       {
+    //         Customer_id: this.$cookies.get("userData").id,
+    //         bank_provider: this.paymentSelected,
+    //         nomor: this.phoneNumber,
+    //         an_rekening: this.$cookies.get("userData").fullname,
+    //         amount: this.nominalSelected,
+    //         poin_account: this.$cookies.get("userData").poin,
+    //         poin_redeem: this.nominalSelected,
+    //       },
+    //       {
+    //         headers: header,
+    //       }
+    //     )
+    //     .then((res) => {
+    //       console.log(res);
+    //       this.$router.push("/detail-transaction");
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // },
   },
   computed: {
     totalPoint() {
       return this.$cookies.get("userData").poin;
     },
+    dataEmoney() {
+      return this.$store.state.Transaction.emoneyTransaction;
+    },
+  },
+  mounted() {
+    console.log(this.dataEmoney);
   },
 };
 </script>
