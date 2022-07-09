@@ -53,14 +53,7 @@
       </v-row>
       <v-row class="d-flex justify-end">
         <v-col md="3">
-          <v-btn
-            dark
-            block
-            color="blue"
-            shaped
-            x-large
-            @click="handleRedeemCash"
-          >
+          <v-btn dark block color="blue" shaped x-large @click="save">
             NEXT
           </v-btn>
           <br />
@@ -124,35 +117,48 @@ export default {
     ],
   }),
   methods: {
-    async handleRedeemCash() {
-      const header = {
-        Authorization: "Bearer " + this.$cookies.get("userData").token,
-        "Content-type": "application/json",
-      };
-      await this.$axios
-        .post(
-          `${this.$axios.defaults.baseURL}/cashout`,
-          {
-            Customer_id: this.$cookies.get("userData").id,
-            bank_provider: this.value,
-            nomor: this.bankNumber,
-            an_rekening: this.$cookies.get("userData").fullname,
-            amount: this.poinSelected,
-            poin_account: this.$cookies.get("userData").poin,
-            poin_redeem: this.poinSelected,
-          },
-          {
-            headers: header,
-          }
-        )
-        .then((res) => {
-          console.log(res);
-          this.$router.push("/detail-transaction");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    save() {
+      this.$store.dispatch("Transaction/fetchDataCashout", {
+        customer_id: this.$cookies.get("userData").id,
+        bank_provider: this.value,
+        nomor: this.bankNumber,
+        an_rekening: this.$cookies.get("userData").fullname,
+        amount: this.poinSelected,
+        poin_account: this.$cookies.get("userData").poin,
+        poin_redeem: this.poinSelected,
+      });
+
+      this.$router.push("/cashout/detail-transaction");
     },
+    // async handleRedeemCash() {
+    //   const header = {
+    //     Authorization: "Bearer " + this.$cookies.get("userData").token,
+    //     "Content-type": "application/json",
+    //   };
+    //   await this.$axios
+    //     .post(
+    //       `${this.$axios.defaults.baseURL}/cashout`,
+    //       {
+    //         Customer_id: this.$cookies.get("userData").id,
+    //         bank_provider: this.value,
+    //         nomor: this.bankNumber,
+    //         an_rekening: this.$cookies.get("userData").fullname,
+    //         amount: this.poinSelected,
+    //         poin_account: this.$cookies.get("userData").poin,
+    //         poin_redeem: this.poinSelected,
+    //       },
+    //       {
+    //         headers: header,
+    //       }
+    //     )
+    //     .then((res) => {
+    //       console.log(res);
+    //       this.$router.push("/detail-transaction");
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // },
     getPointSelected(value) {
       this.poinSelected = value;
       console.log(this.poinSelected);
