@@ -4,28 +4,28 @@
 
     <v-row class="mx-auto">
       <v-col>
-        <v-card
-          class="mx-auto pa-8"
-          max-width="920px"
-          elevation="0"
-          color="white"
-        >
-          <v-card-title class="font-weight-bold">Ubah Profile</v-card-title>
-          <div class="px-4">
-            <v-row>
-              <v-col cols="4">
-                <h4 class="ml-2 font-weight-regular grey--text mb-12">
-                  Nama Kamu
-                </h4>
-              </v-col>
-              <v-col cols="4">
-                <h4
-                  class="ml-2 font-weight-regular grey--text mb-12"
-                  v-if="!isNameEdited"
-                >
-                  {{ UserData.fullname }}
-                </h4>
-                <v-card-actions>
+        <v-form v-model="isValid">
+          <v-card
+            class="mx-auto pa-8"
+            max-width="920px"
+            elevation="0"
+            color="white"
+          >
+            <v-card-title class="font-weight-bold">Ubah Profile</v-card-title>
+            <div class="px-4">
+              <v-row>
+                <v-col cols="4">
+                  <h4 class="ml-2 font-weight-regular grey--text mb-12">
+                    Nama Kamu
+                  </h4>
+                </v-col>
+                <v-col cols="4">
+                  <h4
+                    class="ml-2 font-weight-regular grey--text mb-12"
+                    v-if="!isNameEdited"
+                  >
+                    {{ UserData.fullname }}
+                  </h4>
                   <v-text-field
                     class="mr-3"
                     outlined
@@ -35,27 +35,28 @@
                     :label="UserData.fullname"
                     v-model="editedName"
                   ></v-text-field>
-                </v-card-actions>
-              </v-col>
-              <v-col cols="4">
-                <a @click="isNameEdited = !isNameEdited" v-if="!isNameEdited">
-                  Ubah
-                </a>
-                <a @click="isNameEdited = !isNameEdited" v-else> Batal </a>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="4">
-                <h4 class="ml-2 font-weight-regular grey--text mb-12">Email</h4>
-              </v-col>
-              <v-col cols="4">
-                <h4
-                  class="ml-2 font-weight-regular grey--text mb-12"
-                  v-if="!isEmailEdited"
-                >
-                  {{ UserData.email }}
-                </h4>
-                <v-card-actions>
+                </v-col>
+                <v-col cols="4">
+                  <a @click="isNameEdited = !isNameEdited" v-if="!isNameEdited">
+                    Ubah
+                  </a>
+                  <a @click="isNameEdited = !isNameEdited" v-else> Batal </a>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="4">
+                  <h4 class="ml-2 font-weight-regular grey--text mb-12">
+                    Email
+                  </h4>
+                </v-col>
+                <v-col cols="4">
+                  <h4
+                    class="ml-2 font-weight-regular grey--text mb-12"
+                    v-if="!isEmailEdited"
+                  >
+                    {{ UserData.email }}
+                  </h4>
+
                   <v-text-field
                     class="mr-3"
                     outlined
@@ -65,32 +66,31 @@
                     :label="UserData.email"
                     v-model="editedEmail"
                   ></v-text-field>
-                </v-card-actions>
-              </v-col>
-              <v-col cols="4">
-                <a
-                  @click="isEmailEdited = !isEmailEdited"
-                  v-if="!isEmailEdited"
-                >
-                  Ubah
-                </a>
-                <a @click="isEmailEdited = !isEmailEdited" v-else> Batal </a>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="4">
-                <h4 class="ml-2 font-weight-regular grey--text mb-12">
-                  Nomor Handphone
-                </h4>
-              </v-col>
-              <v-col cols="4">
-                <h4
-                  class="ml-2 font-weight-regular grey--text mb-12"
-                  v-if="!isPhoneNumberEdited"
-                >
-                  {{ UserData.no_hp }}
-                </h4>
-                <v-card-actions>
+                </v-col>
+                <v-col cols="4">
+                  <a
+                    @click="isEmailEdited = !isEmailEdited"
+                    v-if="!isEmailEdited"
+                  >
+                    Ubah
+                  </a>
+                  <a @click="isEmailEdited = !isEmailEdited" v-else> Batal </a>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="4">
+                  <h4 class="ml-2 font-weight-regular grey--text mb-12">
+                    Nomor Handphone
+                  </h4>
+                </v-col>
+                <v-col cols="4">
+                  <h4
+                    class="ml-2 font-weight-regular grey--text mb-12"
+                    v-if="!isPhoneNumberEdited"
+                  >
+                    {{ UserData.no_hp }}
+                  </h4>
+
                   <v-text-field
                     class="mr-3"
                     outlined
@@ -99,34 +99,36 @@
                     v-if="isPhoneNumberEdited"
                     :label="UserData.no_hp"
                     v-model="editedPhoneNumber"
+                    :rules="numberRules"
                   ></v-text-field>
-                </v-card-actions>
-              </v-col>
-              <v-col cols="4">
-                <a
-                  @click="isPhoneNumberEdited = !isPhoneNumberEdited"
-                  v-if="!isPhoneNumberEdited"
-                >
-                  Ubah
-                </a>
-                <a @click="isPhoneNumberEdited = !isPhoneNumberEdited" v-else>
-                  Batal
-                </a>
-              </v-col>
-            </v-row>
-          </div>
+                </v-col>
+                <v-col cols="4">
+                  <a
+                    @click="isPhoneNumberEdited = !isPhoneNumberEdited"
+                    v-if="!isPhoneNumberEdited"
+                  >
+                    Ubah
+                  </a>
+                  <a @click="isPhoneNumberEdited = !isPhoneNumberEdited" v-else>
+                    Batal
+                  </a>
+                </v-col>
+              </v-row>
+            </div>
 
-          <div class="d-flex justify-end mr-3">
-            <v-btn
-              width="168px"
-              dark
-              color="#3790FC"
-              @click="handleEditCustomer"
-            >
-              Simpan
-            </v-btn>
-          </div>
-        </v-card>
+            <div class="d-flex justify-end mr-3">
+              <v-btn
+                width="168px"
+                style="color: white"
+                color="#3790FC"
+                @click="handleEditCustomer"
+                :disabled="!isValid"
+              >
+                Simpan
+              </v-btn>
+            </div>
+          </v-card>
+        </v-form>
       </v-col>
     </v-row>
     <v-dialog v-model="openSuccesModal" width="500">
@@ -158,6 +160,12 @@ export default {
       isNameEdited: false,
       isEmailEdited: false,
       isPhoneNumberEdited: false,
+
+      isValid: false,
+      numberRules: [
+        (v) => Number.isInteger(Number(v)) || "harus angka",
+        (v) => v.length > 10 || "minimal 11 digit",
+      ],
 
       editedName: "",
       editedEmail: "",
