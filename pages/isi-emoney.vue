@@ -14,12 +14,15 @@
         </v-card-title>
       </v-card>
       <br />
+
       <h4>Nomor Ponsel</h4>
       <v-text-field
         label="Masukan Nomor Ponsel"
-        singel-line
+        single-line
         solo
         v-model="phoneNumber"
+        type="text"
+        :rules="numberRules"
       ></v-text-field>
       <h4>Pilih Dompet Digital</h4>
       <br />
@@ -62,7 +65,15 @@
       </v-row>
       <v-row class="d-flex justify-end">
         <v-col md="3">
-          <v-btn dark block color="blue" shaped x-large @click="save">
+          <v-btn
+            style="color: white"
+            block
+            color="blue"
+            shaped
+            x-large
+            @click="save"
+            :disabled="!validationForm"
+          >
             NEXT
           </v-btn>
         </v-col>
@@ -82,6 +93,11 @@ export default {
     paymentSelected: "",
     nominalSelected: null,
     phoneNumber: "",
+    numberRules: [
+      (v) => v.length > 0 || "required",
+      (v) => Number.isInteger(Number(v)) || "harus angka",
+      (v) => v > 0 || "format salah",
+    ],
     nominal: [
       {
         harga: "Rp. 50.000",
@@ -158,7 +174,6 @@ export default {
     },
     getNominalSelected(value) {
       this.nominalSelected = value;
-      console.log(this.nominalSelected);
     },
 
     save() {
@@ -171,39 +186,8 @@ export default {
         poin_account: this.$cookies.get("userData").poin,
         poin_redeem: this.nominalSelected,
       });
-
       this.$router.push("/emoney/detail-transaction");
     },
-
-    // async handleRedeemEmoney() {
-    //   const header = {
-    //     Authorization: "Bearer " + this.$cookies.get("userData").token,
-    //     "Content-type": "application/json",
-    //   };
-    //   await this.$axios
-    //     .post(
-    //       `${this.$axios.defaults.baseURL}/emoney`,
-    //       {
-    //         Customer_id: this.$cookies.get("userData").id,
-    //         bank_provider: this.paymentSelected,
-    //         nomor: this.phoneNumber,
-    //         an_rekening: this.$cookies.get("userData").fullname,
-    //         amount: this.nominalSelected,
-    //         poin_account: this.$cookies.get("userData").poin,
-    //         poin_redeem: this.nominalSelected,
-    //       },
-    //       {
-    //         headers: header,
-    //       }
-    //     )
-    //     .then((res) => {
-    //       console.log(res);
-    //       this.$router.push("/detail-transaction");
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // },
   },
   computed: {
     totalPoint() {
@@ -212,9 +196,17 @@ export default {
     dataEmoney() {
       return this.$store.state.Transaction.emoneyTransaction;
     },
-  },
-  mounted() {
-    console.log(this.dataEmoney);
+    validationForm() {
+      if (
+        this.phoneNumber !== "" &&
+        this.paymentSelected !== "" &&
+        this.nominalSelected !== null
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   },
 };
 </script>

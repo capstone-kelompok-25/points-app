@@ -20,6 +20,7 @@
         singel-line
         solo
         v-model="phoneNumber"
+        :rules="numberRules"
       ></v-text-field>
       <h4>Pilih Provider</h4>
       <v-row>
@@ -87,12 +88,13 @@
       <v-row class="d-flex justify-end">
         <v-col md="3">
           <v-btn
-            dark
+            style="color: white"
             block
             color="blue"
             shaped
             x-large
-            @click="handleRedeemPulsa"
+            @click="save"
+            :disabled="!validationForm"
           >
             NEXT
           </v-btn>
@@ -117,6 +119,13 @@ export default {
     show2: false,
     amountSelected: null,
     pointReedemSelected: null,
+
+    numberRules: [
+      (v) => v.length > 0 || "required",
+      (v) => Number.isInteger(Number(v)) || "harus angka",
+      (v) => v > 0 || "format salah",
+    ],
+
     pulsa: [
       {
         harga: "Rp. 50.000",
@@ -205,61 +214,32 @@ export default {
       elPulsa.classList.remove("active");
       (this.show1 = false), (this.show2 = true);
     },
-    async handleRedeemPulsa() {
-      const header = {
-        Authorization: "Bearer " + this.$cookies.get("userData").token,
-        "Content-type": "application/json",
-      };
+    save() {
       if (this.show1 === true) {
-        await this.$axios
-          .post(
-            `${this.$axios.defaults.baseURL}/pulsa`,
-            {
-              customer_id: this.$cookies.get("userData").id,
-              bank_provider: this.valueProvider,
-              nomor: this.phoneNumber,
-              an_rekening: this.$cookies.get("userData").fullname,
-              amount: this.nominalPulsa,
-              poin_account: this.$cookies.get("userData").poin,
-              poin_redeem: this.nominalPulsa,
-            },
-            {
-              headers: header,
-            }
-          )
-          .then((res) => {
-            console.log(res);
-            this.$router.push("/detail-transaction");
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        this.$store.dispatch("Transaction/fetchDataPulsa", {
+          customer_id: this.$cookies.get("userData").id,
+          an_rekening: this.$cookies.get("userData").fullname,
+          bank_provider: this.valueProvider,
+          nomor: this.phoneNumber,
+          poin_redeem: this.nominalPulsa,
+          poin_account: this.$cookies.get("userData").poin,
+          amount: this.nominalPulsa,
+        });
+        this.$router.push("/pulsa/detail-transaction");
       } else {
-        await this.$axios
-          .post(
-            `${this.$axios.defaults.baseURL}/paketdata`,
-            {
-              customer_id: this.$cookies.get("userData").id,
-              bank_provider: this.valueProvider,
-              nomor: this.phoneNumber,
-              an_rekening: this.$cookies.get("userData").fullname,
-              amount: this.amountSelected,
-              poin_account: this.$cookies.get("userData").poin,
-              poin_redeem: this.pointReedemSelected,
-            },
-            {
-              headers: header,
-            }
-          )
-          .then((res) => {
-            console.log(res);
-            this.$router.push("/detail-transaction");
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        this.$store.dispatch("Transaction/fetchDataPaket", {
+          customer_id: this.$cookies.get("userData").id,
+          an_rekening: this.$cookies.get("userData").fullname,
+          bank_provider: this.valueProvider,
+          nomor: this.phoneNumber,
+          poin_redeem: this.pointReedemSelected,
+          poin_account: this.$cookies.get("userData").poin,
+          amount: this.amountSelected,
+        });
+        this.$router.push("/paket-data/detail-transaction");
       }
     },
+
     getNominalPulsa(value) {
       this.nominalPulsa = value;
     },
@@ -271,6 +251,30 @@ export default {
   computed: {
     totalPoint() {
       return this.$cookies.get("userData").poin;
+    },
+    validationForm() {
+      if (this.show1 === true) {
+        if (
+          this.valueProvider !== "" &&
+          this.phoneNumber !== null &&
+          this.nominalPulsa !== null
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        if (
+          this.valueProvider !== "" &&
+          this.phoneNumber !== null &&
+          this.pointReedemSelected !== null &&
+          this.amountSelected !== null
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      }
     },
   },
   mounted() {

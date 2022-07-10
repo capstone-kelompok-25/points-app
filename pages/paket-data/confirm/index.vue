@@ -27,7 +27,7 @@
                 color="blue"
                 shaped
                 x-large
-                @click="handleRedeemCash"
+                @click="handleRedeemPulsa"
                 :disabled="!isValid"
               >
                 NEXT
@@ -76,41 +76,44 @@
 
 <script>
 export default {
-  name: "ConfirmCashoutPage",
+  name: "ConfirmPaketPage",
   layout: "user",
   data() {
     return {
       dialog: false,
 
-      userPin: "",
-      isError: false,
-      statusMessage: "",
       isValid: false,
-
       numberRules: [
         (v) => v.length > 3 || "pin terdiri dari 4 digit",
         (v) => Number.isInteger(Number(v)) || "format pin harus angka",
         (v) => v > 0 || "format pin salah",
       ],
+
+      userPin: "",
+      isError: false,
+      statusMessage: "",
     };
   },
   methods: {
-    async handleRedeemCash() {
+    successTransaction() {
+      this.$router.push("/");
+    },
+    async handleRedeemPulsa() {
       const header = {
         Authorization: "Bearer " + this.$cookies.get("userData").token,
         "Content-type": "application/json",
       };
       await this.$axios
         .post(
-          `${this.$axios.defaults.baseURL}/cashout`,
+          `${this.$axios.defaults.baseURL}/paketdata`,
           {
             customer_id: this.$cookies.get("userData").id,
-            bank_provider: this.cashoutTransaction.bank_provider,
-            nomor: this.cashoutTransaction.nomor,
+            bank_provider: this.paketTransaction.bank_provider,
+            nomor: this.paketTransaction.nomor,
             an_rekening: this.$cookies.get("userData").fullname,
-            amount: this.cashoutTransaction.amount,
+            amount: this.paketTransaction.amount,
             poin_account: this.$cookies.get("userData").poin,
-            poin_redeem: this.cashoutTransaction.poin_redeem,
+            poin_redeem: this.paketTransaction.poin_redeem,
             pin: parseInt(this.userPin),
           },
           {
@@ -126,23 +129,20 @@ export default {
               this.$router.push("/");
             }, 5000);
           }
-          this.$cookies.remove("cashoutTransaction");
+          this.$cookies.remove("paketTransaction");
         })
         .catch((err) => {
           if (err.response.data.code === 400) {
             this.isError = true;
-            this.statusMessage = "Pin yang ada masukan tidak sesuai!";
+            this.statusMessage = "Pin yang anda masukan tidak sesuai!";
           }
         });
     },
   },
   computed: {
-    cashoutTransaction() {
-      return this.$store.state.Transaction.cashoutTransaction;
+    paketTransaction() {
+      return this.$store.state.Transaction.paketTransaction;
     },
-  },
-  mounted() {
-    console.log(this.cashoutTransaction);
   },
 };
 </script>
