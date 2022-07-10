@@ -11,42 +11,47 @@
           >Silahkan Masukan pin<span class="blue--text"> POIN.ID</span>
           anda</span
         >
-        <v-text-field
-          label="Masukan PIN Anda"
-          singel-line
-          solo
-          v-model="userPin"
-        ></v-text-field>
-        <v-row class="d-flex justify-end">
-          <v-col md="3">
-            <v-btn
-              dark
-              block
-              color="blue"
-              shaped
-              x-large
-              @click="handleRedeemEmoney"
-            >
-              NEXT
-            </v-btn>
-            <v-dialog v-model="dialog" width="500">
-              <v-card class="mx-auto pa-6">
-                <h3 class="text-center">
-                  Transaksi kamu sedang di proses, info lebih detail silahkan
-                  cek melalui aplikasi POINT.ID
-                </h3>
-                <div>
-                  <v-img
-                    class="mx-auto"
-                    width="205"
-                    src="/assets/icon/Succeess Animation.png"
-                  ></v-img>
-                </div>
-              </v-card>
-            </v-dialog>
-            <br />
-          </v-col>
-        </v-row>
+        <v-form v-model="isValid">
+          <v-text-field
+            label="Masukan PIN Anda"
+            single-line
+            solo
+            v-model="userPin"
+            :rules="numberRules"
+          ></v-text-field>
+
+          <v-row class="d-flex justify-end">
+            <v-col md="3">
+              <v-btn
+                style="color: white"
+                block
+                color="blue"
+                shaped
+                x-large
+                @click="handleRedeemEmoney"
+                :disabled="!isValid"
+              >
+                NEXT
+              </v-btn>
+              <v-dialog v-model="dialog" width="500">
+                <v-card class="mx-auto pa-6">
+                  <h3 class="text-center">
+                    Transaksi kamu sedang di proses, info lebih detail silahkan
+                    cek melalui aplikasi POINT.ID
+                  </h3>
+                  <div>
+                    <v-img
+                      class="mx-auto"
+                      width="205"
+                      src="/assets/icon/Succeess Animation.png"
+                    ></v-img>
+                  </div>
+                </v-card>
+              </v-dialog>
+              <br />
+            </v-col>
+          </v-row>
+        </v-form>
       </v-col>
     </v-row>
     <br /><br />
@@ -78,9 +83,17 @@ export default {
     return {
       dialog: false,
 
-      userPin: null,
+      userPin: "",
       isError: false,
       statusMessage: "",
+
+      isValid: false,
+
+      numberRules: [
+        (v) => v.length > 3 || "pin terdiri dari 4 digit",
+        (v) => Number.isInteger(Number(v)) || "format pin harus angka",
+        (v) => v > 0 || "format pin salah",
+      ],
     };
   },
   methods: {
