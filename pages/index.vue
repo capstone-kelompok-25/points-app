@@ -74,7 +74,7 @@
               max-width="33px"
               class="mx-auto"
             ></v-img>
-            <span>Redeem Cash-Out</span>
+            <span>Redeem Cash Out</span>
             <br /><br />
           </v-card>
 

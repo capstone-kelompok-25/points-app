@@ -1,5 +1,9 @@
 <template>
   <div class="bg">
+    <div class="d-flex">
+    <p class="ml-2 mt-4"><a href="/" style="text-decoration: none"> POINT.ID</a></p>
+    <v-breadcrumbs :items="items"></v-breadcrumbs>
+    </div>
     <br />
     <h2 class="text-center mx-auto">Your Detail Transaction</h2>
     <v-card elevation="0" width="400" class="mx-auto" color="#F0F4F9">
@@ -41,6 +45,25 @@
 <script>
 export default {
   name: "DetailTransactionPaket",
+  data: () => ({
+      items: [
+        {
+          text: 'Home',
+          disabled: false,
+          href: '/',
+        },
+        {
+          text: 'Redeem Pulsa/Paket Data',
+          disabled: false,
+          href: '/isi-paket-pulsa',
+        },
+        {
+          text: 'Detail Transaction',
+          disabled: true,
+          href: '/paket-data/detail-transaction',
+        },
+      ],
+    }),
   layout: "user",
 
   methods: {

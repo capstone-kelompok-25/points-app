@@ -120,7 +120,6 @@ export default {
         { title: "Beranda", path: "/" },
         { title: "Mitra Point.ID", path: "/mitra-pointid" },
         { title: "Login", path: "/login" },
-        { title: "Register", path: "/get-point" },
       ],
       menuLoged: [
         { title: "Beranda", path: "/" },
