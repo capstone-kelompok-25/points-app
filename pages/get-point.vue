@@ -1,5 +1,10 @@
 <template>
   <div class="bg">
+    <v-row v-if="!isLoged">
+      <v-col class="d-flex justify-end">
+        <p>Have Account?<a @click="login"> Sign in here</a></p>
+      </v-col>
+    </v-row>
     <v-row>
       <v-col md="6" class="d-flex justify-end align-center">
         <div class="mr-16">
@@ -37,6 +42,17 @@
 export default {
   name: "LoginPage",
   layout: "user",
+  props: {
+    isLoged: {
+      type: Boolean,
+      required: true,
+    },
+  },
+  methods: {
+    login() {
+      this.$router.push("/login");
+    },
+  },
 };
 </script>
 

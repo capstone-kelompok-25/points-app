@@ -68,7 +68,7 @@
     </v-row>
     <br /><br />
     <div class="d-flex justify-center">
-      <p>I’m a new member <a @click="register">Sign Up</a></p>
+      <p>Don’t Have Account?<a @click="downloadApp"> Click here</a></p>
     </div>
     <v-dialog
       v-model="isError"
@@ -83,7 +83,7 @@
 
         <v-divider> </v-divider>
         <v-card-actions class="justify-end">
-          <v-btn dark color="#FF565F" @click="isError = false">Coba Lagi</v-btn>
+          <v-btn dark color="#FF565F" @click="isError = false">Coba lagi</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -117,7 +117,7 @@ export default {
   },
 
   methods: {
-    register() {
+    downloadApp() {
       this.$router.push("/get-point");
     },
     login() {

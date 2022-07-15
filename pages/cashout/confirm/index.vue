@@ -67,7 +67,7 @@
 
         <v-divider> </v-divider>
         <v-card-actions class="justify-end">
-          <v-btn dark color="#FF565F" @click="isError = false">Coba Lagi</v-btn>
+          <v-btn dark color="#FF565F" @click="isError = false">Coba lagi</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
