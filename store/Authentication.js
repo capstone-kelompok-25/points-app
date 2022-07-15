@@ -32,6 +32,7 @@ const actions = {
       path: "/",
       maxAge: 60 * 60,
     });
+    store.commit("setUserData", response.data.result);
 
     this.$router.push("/");
   },
