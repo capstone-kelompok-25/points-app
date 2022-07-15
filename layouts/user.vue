@@ -47,7 +47,7 @@
       <v-col cols="3" class="footer-right-side">
         <v-row class="align-center">
           <img src="../static/assets/icon/pointid-logo.jpg" width="120" />
-          <span>2022 PT. Point.ID</span>
+          <span>© 2022 PT. Point.ID</span>
         </v-row>
       </v-col>
     </v-footer>

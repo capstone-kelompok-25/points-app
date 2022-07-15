@@ -1,5 +1,9 @@
 <template>
   <div class="bg">
+    <div class="d-flex">
+    <p class="ml-2 mt-4"><a href="/" style="text-decoration: none"> POINT.ID</a></p>
+    <v-breadcrumbs :items="items"></v-breadcrumbs>
+    </div>
     <br />
     <h2 class="text-center mx-auto">Your Detail Transaction</h2>
     <v-card elevation="0" width="400" class="mx-auto" color="#F0F4F9">
@@ -54,6 +58,25 @@
 <script>
 export default {
   name: "DetailTransactionCashout",
+  data: () => ({
+      items: [
+        {
+          text: 'Home',
+          disabled: false,
+          href: '/',
+        },
+        {
+          text: 'Redeem Cash Out',
+          disabled: false,
+          href: '/isi-cashout',
+        },
+        {
+          text: 'Detail Transaction',
+          disabled: true,
+          href: '/cashout/detail-transaction',
+        },
+      ],
+    }),
   layout: "user",
   methods: {
     paymentPIN() {

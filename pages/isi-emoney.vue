@@ -10,7 +10,7 @@
             max-width="30px"
             class="ml-1"
           ></v-img>
-          <h3 class="ml-1">{{ totalPoint }}</h3>
+          <h3 class="ml-1">{{ poinCustomer }}</h3>
         </v-card-title>
       </v-card>
       <br />
@@ -89,6 +89,7 @@ export default {
   middleware: ["auth"],
   layout: "user",
   data: () => ({
+    poinCustomer: "",
     value: null,
     paymentSelected: "",
     nominalSelected: null,
@@ -190,9 +191,6 @@ export default {
     },
   },
   computed: {
-    totalPoint() {
-      return this.$cookies.get("userData").poin;
-    },
     dataEmoney() {
       return this.$store.state.Transaction.emoneyTransaction;
     },
@@ -207,6 +205,25 @@ export default {
         return false;
       }
     },
+  },
+  async created() {
+    const header = {
+      Authorization: "Bearer " + this.$cookies.get("userData").token,
+      "Content-type": "application/json",
+    };
+    const response = await this.$axios.get(
+      `${this.$axios.defaults.baseURL}/customer/${
+        this.$cookies.get("userData").id
+      }`,
+      {
+        headers: header,
+      }
+    );
+
+    let saldo = response.data.result.poin;
+    const format = saldo.toString().split("").reverse().join("");
+    const convert = format.match(/\d{1,3}/g);
+    this.poinCustomer = " " + convert.join(".").split("").reverse().join("");
   },
 };
 </script>

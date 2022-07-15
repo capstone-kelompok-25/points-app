@@ -67,7 +67,7 @@
 
         <v-divider> </v-divider>
         <v-card-actions class="justify-end">
-          <v-btn dark color="#FF565F" @click="isError = false">Coba Lagi</v-btn>
+          <v-btn dark color="#FF565F" @click="isError = false">Coba lagi</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -129,9 +129,12 @@ export default {
           this.$cookies.remove("cashoutTransaction");
         })
         .catch((err) => {
-          if (err.response.data.code === 400) {
+          if (err.response.data.messages === "wrong pin") {
             this.isError = true;
             this.statusMessage = "Pin yang ada masukan tidak sesuai!";
+          } else if (err.response.data.messages === "out of stock") {
+            this.isError = true;
+            this.statusMessage = "Stok tidak tersedia";
           }
         });
     },
