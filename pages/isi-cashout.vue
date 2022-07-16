@@ -10,7 +10,7 @@
             max-width="30px"
             class="ml-1"
           ></v-img>
-          <h3 class="ml-1">{{ totalPoint }}</h3>
+          <h3 class="ml-1">{{ poinCustomer }}</h3>
         </v-card-title>
       </v-card>
       <br />
@@ -79,6 +79,7 @@ export default {
   layout: "user",
   middleware: ["auth"],
   data: () => ({
+    poinCustomer: "",
     items: ["BNI", "BRI", "BCA", "Mandiri"],
     value: null,
     bankNumber: "",
@@ -154,9 +155,9 @@ export default {
     },
   },
   computed: {
-    totalPoint() {
-      return this.$cookies.get("userData").poin;
-    },
+    // totalPoint() {
+    //   return this.$cookies.get("userData").poin;
+    // },
     validationForm() {
       if (
         this.bankNumber !== "" &&
@@ -168,6 +169,25 @@ export default {
         return false;
       }
     },
+  },
+  async created() {
+    const header = {
+      Authorization: "Bearer " + this.$cookies.get("userData").token,
+      "Content-type": "application/json",
+    };
+    const response = await this.$axios.get(
+      `${this.$axios.defaults.baseURL}/customer/${
+        this.$cookies.get("userData").id
+      }`,
+      {
+        headers: header,
+      }
+    );
+
+    let saldo = response.data.result.poin;
+    const format = saldo.toString().split("").reverse().join("");
+    const convert = format.match(/\d{1,3}/g);
+    this.poinCustomer = " " + convert.join(".").split("").reverse().join("");
   },
 };
 </script>

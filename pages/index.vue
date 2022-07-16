@@ -12,7 +12,7 @@
                 max-width="30px"
                 class="ml-1"
               ></v-img>
-              <h3 class="ml-1">{{ totalPoint }}</h3>
+              <h3 class="ml-1">{{ poinCustomer }}</h3>
             </v-card-title>
           </v-card>
         </div>
@@ -107,6 +107,7 @@ export default {
   isLogin: false,
   data() {
     return {
+      poinCustomer: "",
       items: [
         {
           src: require("../static/assets/icon/LandingPage/Banner.png"),
@@ -132,16 +133,51 @@ export default {
     },
   },
   computed: {
-    totalPoint() {
-      return this.$cookies.get("userData").poin;
-    },
+    // totalPoint() {
+    //   return this.$cookies.get("userData").poin;
+    // },
+    // async totalPoint() {
+    //   const header = {
+    //     Authorization: "Bearer " + this.$cookies.get("userData").token,
+    //     "Content-type": "application/json",
+    //   };
+    //   const response = await this.$axios.get(
+    //     `${this.$axios.defaults.baseURL}/customer/${
+    //       this.$cookies.get("userData").id
+    //     }`,
+    //     {
+    //       headers: header,
+    //     }
+    //   );
+    //   return response.data.result.poin;
+    // },
   },
-  created() {
+  async created() {
     let token = this.$cookies.get("userData");
     if (!token) {
       this.isLogin = false;
     } else {
       this.isLogin = true;
+    }
+
+    if (this.isLogin === true) {
+      const header = {
+        Authorization: "Bearer " + this.$cookies.get("userData").token,
+        "Content-type": "application/json",
+      };
+      const response = await this.$axios.get(
+        `${this.$axios.defaults.baseURL}/customer/${
+          this.$cookies.get("userData").id
+        }`,
+        {
+          headers: header,
+        }
+      );
+
+      let saldo = response.data.result.poin;
+      const format = saldo.toString().split("").reverse().join("");
+      const convert = format.match(/\d{1,3}/g);
+      this.poinCustomer = " " + convert.join(".").split("").reverse().join("");
     }
   },
 };

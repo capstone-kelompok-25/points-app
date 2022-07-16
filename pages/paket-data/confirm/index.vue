@@ -131,9 +131,12 @@ export default {
           this.$cookies.remove("paketTransaction");
         })
         .catch((err) => {
-          if (err.response.data.code === 400) {
+          if (err.response.data.messages === "wrong pin") {
             this.isError = true;
-            this.statusMessage = "Pin yang anda masukan tidak sesuai!";
+            this.statusMessage = "Pin yang ada masukan tidak sesuai!";
+          } else if (err.response.data.messages === "out of stock") {
+            this.isError = true;
+            this.statusMessage = "Stok tidak tersedia";
           }
         });
     },
