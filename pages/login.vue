@@ -73,7 +73,7 @@
     <v-dialog
       v-model="isError"
       transition="dialog-top-transition"
-      max-width="500"
+      max-width="501px"
     >
       <v-card>
         <v-card-title>Opss..</v-card-title>
@@ -81,9 +81,8 @@
           {{ statusMessage }}
         </v-card-subtitle>
 
-        <v-divider> </v-divider>
         <v-card-actions class="justify-end">
-          <v-btn dark color="#FF565F" @click="isError = false">Coba lagi</v-btn>
+          <v-btn max-width="87px" dark color="#FF565F" @click="isError = false">Coba lagi</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

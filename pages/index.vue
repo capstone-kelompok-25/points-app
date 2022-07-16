@@ -112,7 +112,7 @@ export default {
           src: require("../static/assets/icon/LandingPage/Banner.png"),
         },
         {
-          src: require("../static/assets/icon/LandingPage/Banner.png"),
+          src: require("../static/assets/icon/LandingPage/banner 2.png"),
         },
       ],
     };

@@ -96,7 +96,7 @@
             @click="save"
             :disabled="!validationForm"
           >
-            NEXT
+            Lanjut
           </v-btn>
           <br />
         </v-col>

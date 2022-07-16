@@ -34,7 +34,7 @@
       <v-row class="d-flex justify-end">
         <v-col md="4">
           <v-btn dark block color="blue" shaped x-large @click="paymentPIN">
-            NEXT
+            Redeem
           </v-btn>
         </v-col>
       </v-row>
