@@ -1,8 +1,10 @@
 <template>
   <div class="bg">
     <div class="d-flex">
-    <p class="ml-2 mt-4"><a href="/" style="text-decoration: none"> POINT.ID</a></p>
-    <v-breadcrumbs :items="items"></v-breadcrumbs>
+      <p class="ml-2 mt-4">
+        <a href="/" style="text-decoration: none"> POINT.ID</a>
+      </p>
+      <v-breadcrumbs :items="items"></v-breadcrumbs>
     </div>
     <br />
     <h2 class="text-center mx-auto">Your Detail Transaction</h2>
@@ -20,12 +22,22 @@
           </v-card-text>
           <v-card-title class="blue--text">POIN</v-card-title>
           <v-card-text>
-            <span>Poin anda: {{ paketTransaction.poin_account }}</span
+            <span
+              >Poin anda:
+              {{ parsingMoney(paketTransaction.poin_account) }}</span
             ><br />
             <span
-              >Poin yang akan Ditukar: {{ paketTransaction.poin_redeem }}</span
+              >Poin yang akan Ditukar:
+              {{ parsingMoney(paketTransaction.poin_redeem) }}</span
             ><br />
-            <span>amount POIN: {{ paketTransaction.amount }}</span>
+            <span
+              >Sisa POIN:
+              {{
+                parsingMoney(
+                  paketTransaction.poin_account - paketTransaction.poin_redeem
+                )
+              }}</span
+            >
           </v-card-text>
         </v-card>
         <br /><br /><br />
@@ -46,29 +58,37 @@
 export default {
   name: "DetailTransactionPaket",
   data: () => ({
-      items: [
-        {
-          text: 'Home',
-          disabled: false,
-          href: '/',
-        },
-        {
-          text: 'Redeem Pulsa/Paket Data',
-          disabled: false,
-          href: '/isi-paket-pulsa',
-        },
-        {
-          text: 'Detail Transaction',
-          disabled: true,
-          href: '/paket-data/detail-transaction',
-        },
-      ],
-    }),
+    items: [
+      {
+        text: "Home",
+        disabled: false,
+        href: "/",
+      },
+      {
+        text: "Redeem Pulsa/Paket Data",
+        disabled: false,
+        href: "/isi-paket-pulsa",
+      },
+      {
+        text: "Detail Transaction",
+        disabled: true,
+        href: "/paket-data/detail-transaction",
+      },
+    ],
+  }),
   layout: "user",
 
   methods: {
     paymentPIN() {
       this.$router.push("/paket-data/confirm");
+    },
+    parsingMoney(param) {
+      const saldo = param;
+      const format = saldo.toString().split("").reverse().join("");
+      const convert = format.match(/\d{1,3}/g);
+      const moneyFormat = convert.join(".").split("").reverse().join("");
+
+      return moneyFormat;
     },
   },
   computed: {

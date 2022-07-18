@@ -16,12 +16,22 @@
           </v-card-text>
           <v-card-title class="blue--text">POIN</v-card-title>
           <v-card-text>
-            <span>Poin anda: {{ pulsaTransaction.poin_account }}</span
+            <span
+              >Poin anda:
+              {{ parsingMoney(pulsaTransaction.poin_account) }}</span
             ><br />
             <span
-              >Poin yang akan Ditukar: {{ pulsaTransaction.poin_redeem }}</span
+              >Poin yang akan Ditukar:
+              {{ parsingMoney(pulsaTransaction.poin_redeem) }}</span
             ><br />
-            <span>amount POIN: {{ pulsaTransaction.amount }}</span>
+            <span
+              >Sisa POIN:
+              {{
+                parsingMoney(
+                  pulsaTransaction.poin_account - pulsaTransaction.poin_redeem
+                )
+              }}</span
+            >
           </v-card-text>
         </v-card>
         <br /><br /><br />
@@ -46,6 +56,14 @@ export default {
   methods: {
     paymentPIN() {
       this.$router.push("/pulsa/confirm");
+    },
+    parsingMoney(param) {
+      const saldo = param;
+      const format = saldo.toString().split("").reverse().join("");
+      const convert = format.match(/\d{1,3}/g);
+      const moneyFormat = convert.join(".").split("").reverse().join("");
+
+      return moneyFormat;
     },
   },
   computed: {

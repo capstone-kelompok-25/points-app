@@ -74,7 +74,7 @@
             @click="save"
             :disabled="!validationForm"
           >
-            NEXT
+            Lanjut
           </v-btn>
         </v-col>
       </v-row>

@@ -1,8 +1,10 @@
 <template>
   <div class="bg">
     <div class="d-flex">
-    <p class="ml-2 mt-4"><a href="/" style="text-decoration: none"> POINT.ID</a></p>
-    <v-breadcrumbs :items="items"></v-breadcrumbs>
+      <p class="ml-2 mt-4">
+        <a href="/" style="text-decoration: none"> POINT.ID</a>
+      </p>
+      <v-breadcrumbs :items="items"></v-breadcrumbs>
     </div>
     <br />
     <h2 class="text-center mx-auto">Your Detail Transaction</h2>
@@ -32,13 +34,23 @@
           </v-card-text>
           <v-card-title class="blue--text">POIN</v-card-title>
           <v-card-text>
-            <span>Poin anda: {{ cashoutTransaction.poin_account }}</span
+            <span
+              >Poin anda:
+              {{ parsingMoney(cashoutTransaction.poin_account) }}</span
             ><br />
             <span
               >Poin yang akan Ditukar:
-              {{ cashoutTransaction.poin_redeem }}</span
+              {{ parsingMoney(cashoutTransaction.poin_redeem) }}</span
             ><br />
-            <span>amount POIN: {{ cashoutTransaction.amount }}</span>
+            <span
+              >Sisa POIN:
+              {{
+                parsingMoney(
+                  cashoutTransaction.poin_account -
+                    cashoutTransaction.poin_redeem
+                )
+              }}</span
+            >
           </v-card-text>
         </v-card>
         <br /><br /><br />
@@ -59,28 +71,36 @@
 export default {
   name: "DetailTransactionCashout",
   data: () => ({
-      items: [
-        {
-          text: 'Home',
-          disabled: false,
-          href: '/',
-        },
-        {
-          text: 'Redeem Cash Out',
-          disabled: false,
-          href: '/isi-cashout',
-        },
-        {
-          text: 'Detail Transaction',
-          disabled: true,
-          href: '/cashout/detail-transaction',
-        },
-      ],
-    }),
+    items: [
+      {
+        text: "Home",
+        disabled: false,
+        href: "/",
+      },
+      {
+        text: "Redeem Cash Out",
+        disabled: false,
+        href: "/isi-cashout",
+      },
+      {
+        text: "Detail Transaction",
+        disabled: true,
+        href: "/cashout/detail-transaction",
+      },
+    ],
+  }),
   layout: "user",
   methods: {
     paymentPIN() {
       this.$router.push("/cashout/confirm");
+    },
+    parsingMoney(param) {
+      const saldo = param;
+      const format = saldo.toString().split("").reverse().join("");
+      const convert = format.match(/\d{1,3}/g);
+      const moneyFormat = convert.join(".").split("").reverse().join("");
+
+      return moneyFormat;
     },
   },
   computed: {
