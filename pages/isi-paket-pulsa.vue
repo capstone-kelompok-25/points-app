@@ -74,7 +74,6 @@
                 <v-card-title>
                   {{ item.internet }}
                   <v-spacer></v-spacer>
-                  <a class="blue--text">Lihat Detail</a>
                 </v-card-title>
                 <v-card-text>
                   <span>{{ item.kuota }}</span
