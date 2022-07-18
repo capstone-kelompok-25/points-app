@@ -72,39 +72,12 @@
               >
             </v-list-item>
             <v-list-item>
-              <v-btn dark color="#FF565F" @click="openLogoutModal"
-                >Keluar</v-btn
-              >
+              <v-btn dark color="#FF565F" @click="logout">Keluar</v-btn>
             </v-list-item>
           </v-list>
         </v-menu>
       </v-toolbar-items>
     </v-toolbar>
-    <v-dialog v-model="isOpenLogout" max-width="500px">
-      <v-card>
-        <br />
-        <v-card-title class="text-h5 mx-auto d-flex justify-center"
-          >Apakah Anda yakin ingin Logout?</v-card-title
-        >
-        <v-card-actions>
-          <v-row>
-            <br />
-            <v-spacer></v-spacer>
-            <v-col md="3">
-              <v-btn block dark color="#92E057" @click="logout()">Ya</v-btn>
-            </v-col>
-            <v-col md="3">
-              <v-btn block dark color="#FF565F" @click="isOpenLogout = false"
-                >Tidak</v-btn
-              >
-            </v-col>
-            <v-spacer></v-spacer>
-            <br />
-          </v-row>
-        </v-card-actions>
-        <br />
-      </v-card>
-    </v-dialog>
   </section>
 </template>
 
