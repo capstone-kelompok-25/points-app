@@ -42,16 +42,29 @@
 export default {
   name: "LoginPage",
   layout: "user",
-  props: {
-    isLoged: {
-      type: Boolean,
-      required: true,
-    },
+  data() {
+    return {
+      isLoged: false,
+    };
   },
+  // props: {
+  //   isLoged: {
+  //     type: Boolean,
+  //     required: true,
+  //   },
+  // },
   methods: {
     login() {
       this.$router.push("/login");
     },
+  },
+  mounted() {
+    let token = this.$cookies.get("userData");
+    if (!token) {
+      this.isLoged = false;
+    } else {
+      this.isLoged = true;
+    }
   },
 };
 </script>

@@ -19,6 +19,7 @@
         label="Masukan Nomor Ponsel Anda"
         singel-line
         solo
+        type="number"
         v-model="phoneNumber"
         :rules="numberRules"
       ></v-text-field>
@@ -253,8 +254,8 @@ export default {
     validationForm() {
       if (this.show1 === true) {
         if (
-          this.valueProvider !== "" &&
-          this.phoneNumber !== null &&
+          this.valueProvider !== null &&
+          this.phoneNumber !== "" &&
           this.nominalPulsa !== null
         ) {
           return true;
@@ -263,8 +264,8 @@ export default {
         }
       } else {
         if (
-          this.valueProvider !== "" &&
-          this.phoneNumber !== null &&
+          this.valueProvider !== null &&
+          this.phoneNumber !== "" &&
           this.pointReedemSelected !== null &&
           this.amountSelected !== null
         ) {

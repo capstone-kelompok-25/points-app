@@ -21,7 +21,7 @@
         single-line
         solo
         v-model="phoneNumber"
-        type="text"
+        type="number"
         :rules="numberRules"
       ></v-text-field>
       <h4>Pilih Dompet Digital</h4>
@@ -74,7 +74,7 @@
             @click="save"
             :disabled="!validationForm"
           >
-            Lanjut
+            NEXT
           </v-btn>
         </v-col>
       </v-row>

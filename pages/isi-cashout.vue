@@ -20,7 +20,7 @@
         singel-line
         solo
         v-model="bankNumber"
-        type="text"
+        type="number"
         :rules="numberRules"
       ></v-text-field>
       <h4>Pilih BANK</h4>
@@ -151,7 +151,6 @@ export default {
 
     getPointSelected(value) {
       this.poinSelected = value;
-      console.log(this.poinSelected);
     },
   },
   computed: {

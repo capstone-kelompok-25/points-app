@@ -29,7 +29,9 @@
           <span class="btn font-weight-medium">{{ item.title }}</span>
         </v-btn>
       </v-toolbar-items>
-      <v-btn dark color="#3790FC" elevation="0" to="/login"><p class="white--text">Login</p></v-btn>
+      <v-btn color="#3790FC" class="white--text" elevation="0" to="/login"
+        >Login</v-btn
+      >
     </v-toolbar>
 
     <v-toolbar v-else class="navbar-component" dense>
@@ -70,7 +72,9 @@
               >
             </v-list-item>
             <v-list-item>
-              <v-btn dark color="#FF565F" @click="openLogoutModal">Keluar</v-btn>
+              <v-btn dark color="#FF565F" @click="openLogoutModal"
+                >Keluar</v-btn
+              >
             </v-list-item>
           </v-list>
         </v-menu>
@@ -164,18 +168,18 @@ span {
   color: #6c7380;
 }
 span:focus {
-  color: #3790FC;
+  color: #3790fc;
 }
 span:hover {
-  color: #3790FC;
+  color: #3790fc;
 }
 span:active {
-  color: #3790FC;
+  color: #3790fc;
 }
 .btn {
   color: #6c7380;
 }
 .btn:focus {
-  color: #3790FC;
+  color: #3790fc;
 }
 </style>
