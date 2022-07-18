@@ -21,7 +21,7 @@
         single-line
         solo
         v-model="phoneNumber"
-        type="text"
+        type="number"
         :rules="numberRules"
       ></v-text-field>
       <h4>Pilih Dompet Digital</h4>

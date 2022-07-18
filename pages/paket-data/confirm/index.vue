@@ -30,9 +30,9 @@
                 @click="handleRedeemPulsa"
                 :disabled="!isValid"
               >
-                NEXT
+                Lanjut
               </v-btn>
-              <v-dialog v-model="dialog" width="500">
+              <v-dialog v-model="dialog" width="501px">
                 <v-card class="mx-auto pa-6">
                   <h3 class="text-center">
                     Transaksi kamu sedang di proses, info lebih detail silahkan
@@ -57,7 +57,7 @@
     <v-dialog
       v-model="isError"
       transition="dialog-top-transition"
-      max-width="500"
+      max-width="501px"
     >
       <v-card>
         <v-card-title>Opss..</v-card-title>
@@ -65,7 +65,6 @@
           {{ statusMessage }}
         </v-card-subtitle>
 
-        <v-divider> </v-divider>
         <v-card-actions class="justify-end">
           <v-btn dark color="#FF565F" @click="isError = false">Coba Lagi</v-btn>
         </v-card-actions>

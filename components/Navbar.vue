@@ -26,9 +26,12 @@
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-xs-only">
         <v-btn text v-for="item in menuItems" :key="item.title" :to="item.path">
-          <span class="font-weight-medium">{{ item.title }}</span>
+          <span class="btn font-weight-medium">{{ item.title }}</span>
         </v-btn>
       </v-toolbar-items>
+      <v-btn color="#3790FC" class="white--text" elevation="0" to="/login"
+        >Login</v-btn
+      >
     </v-toolbar>
 
     <v-toolbar v-else class="navbar-component" dense>
@@ -69,7 +72,9 @@
               >
             </v-list-item>
             <v-list-item>
-              <v-btn text color="red" @click="openLogoutModal">Keluar</v-btn>
+              <v-btn dark color="#FF565F" @click="openLogoutModal"
+                >Keluar</v-btn
+              >
             </v-list-item>
           </v-list>
         </v-menu>
@@ -119,7 +124,6 @@ export default {
       menuItems: [
         { title: "Beranda", path: "/" },
         { title: "Mitra Point.ID", path: "/mitra-pointid" },
-        { title: "Login", path: "/login" },
       ],
       menuLoged: [
         { title: "Beranda", path: "/" },
@@ -159,5 +163,23 @@ export default {
     color: #6c7380;
     text-decoration: none;
   }
+}
+span {
+  color: #6c7380;
+}
+span:focus {
+  color: #3790fc;
+}
+span:hover {
+  color: #3790fc;
+}
+span:active {
+  color: #3790fc;
+}
+.btn {
+  color: #6c7380;
+}
+.btn:focus {
+  color: #3790fc;
 }
 </style>
