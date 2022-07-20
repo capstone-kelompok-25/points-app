@@ -194,7 +194,7 @@ export default {
           `${this.$axios.defaults.baseURL}/customer`,
           {
             id: parseInt(this.customerId),
-            name: this.editedName,
+            fullname: this.editedName,
             email: this.editedEmail,
             no_hp: this.editedPhoneNumber,
           },
